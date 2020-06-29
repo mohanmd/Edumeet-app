@@ -24,3 +24,26 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+//###### common
+// text
+.text-center {
+    text-align: center;
+}
+.flex-box{
+    display: flex;
+}
+.alg-center{
+    align-items: center;
+}
+.just-center{
+    justify-content: center;
+}
+
+// header
+ion-header {
+    ion-title{
+        text-transform: capitalize;
+    }
+}

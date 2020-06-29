@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
 };
+export const SERVER_URL = 'https://edumeetdemo.mo.vc/schoolmanagement/api/';

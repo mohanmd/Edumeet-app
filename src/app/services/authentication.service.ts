@@ -4,9 +4,11 @@ import { Storage } from '@ionic/storage';
 import { ToastController, Platform } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 
-// import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
+import { environment, SERVER_URL } from '../../environments/environment';
+import { HttpClient,HttpHeaders} from '@angular/common/http';
+import { AlertController,LoadingController } from '@ionic/angular';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,19 +17,31 @@ export class AuthenticationService {
 
   authState = new BehaviorSubject(false);
 
-  // api path
-  // base_path = 'http://localhost:8100';
+user ={
+  username:'',
+  password: ''
+};
+private headers: HttpHeaders = new HttpHeaders({});
+
+
 
   constructor(
     private router: Router,
     private storage: Storage,
     private platform: Platform,
-    public toastController: ToastController
+    public toastController: ToastController,
+    private http: HttpClient, 
+    public alertController: AlertController,
+    private loadingController: LoadingController,
+
+
+
   ){ 
     this.platform.ready().then(() => {
       this.ifLoggedIn();
     });
   }
+
 
   ifLoggedIn() {
     this.storage.get('USER_INFO').then((response) => {
@@ -37,33 +51,89 @@ export class AuthenticationService {
     });
   }
 
-  login() {
-    var dummy_response = {
-      user_id: '007',
-      user_name: 'test'
-    };
-    this.storage.set('USER_INFO', dummy_response).then((response) => {
-      this.router.navigate(['dashboard']);
-      this.authState.next(true);
-    });
-  }
-
-
-  //  // Http Options
-  //  httpOptions = {
-  //   headers: new HttpHeaders({
-  //     'Content-Type': 'application/json'
-  //   })
+  // login() {
+  //   var dummy_response = {
+  //     user_id: '007',
+  //     user_name: 'test'
+  //   };
+  //   this.storage.set('USER_INFO', dummy_response).then((response) => {
+  //     this.router.navigate(['dashboard']);
+  //     this.authState.next(true);
+  //   });
   // }
 
-  logout() {
-    this.storage.remove('USER_INFO').then(() => {
-      this.router.navigate(['login']);
-      this.authState.next(false);
+
+  // //  // Http Options
+  // //  httpOptions = {
+  // //   headers: new HttpHeaders({
+  // //     'Content-Type': 'application/json'
+  // //   })
+  // // }
+
+  // logout() {
+  //   this.storage.remove('USER_INFO').then(() => {
+  //     this.router.navigate(['login']);
+  //     this.authState.next(false);
+  //   });
+  // }
+
+  // isAuthenticated() {
+  //   return this.authState.value;
+  // }
+
+
+
+  async login()
+  {
+
+    if(this.user)
+    {
+     // alert("1");
+    let loading = this.loadingController.create({
+      message: 'Please wait...',
+      spinner:"circles"
     });
+    // (await loading).present();
+    console.log(SERVER_URL);
+    this.headers.append('Content-Type','application/x-www-form-urlencoded');
+    this.headers.append('Content-Type','application/json');
+    this.headers.append('Content-Type','Access-Control-Allow-Origin');
+
+   (await loading).present();
+    console.log(SERVER_URL);
+   // console.log(this.user);
+  
+    this.http.post(SERVER_URL+'login',this.user).subscribe((data:any)=> {
+  //  console.log(data.user);
+    if(data.status=="success")
+    {
+       this.loadingController.dismiss();
+       this.storage.set('user',data.user);
+
+       this.router.navigate(['dashboard'])
+    }
+    else if(data.status=="failure")
+    {
+      console.log(this.user);
+
+       this.loadingController.dismiss();
+      //  this.failurealert();
+    }
+    else{
+      this.loadingController.dismiss();
+      // this.incorrectalert();
+    }
+   },
+   (err) => {
+    this.loadingController.dismiss();
+
+    console.log(err); 
+  });
+  }
+    else
+    {
+      //alert("2");
+    }
   }
 
-  isAuthenticated() {
-    return this.authState.value;
-  }
 }

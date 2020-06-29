@@ -1,9 +1,15 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>dashboard</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-toolbar color="secondary">
+  <ion-buttons slot="secondary">
+    <ion-button color="primary">
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-title>dashboard</ion-title>
+</ion-toolbar>
 
-<ion-content>
-
+<ion-content class="ion-padding text-center">
+  <div class=" alg-center just-center">
+    <h3>Your Now Login!</h3>
+    <ion-button color="secondary" (click)="logoutUser()">logout</ion-button>
+  </div>
 </ion-content>

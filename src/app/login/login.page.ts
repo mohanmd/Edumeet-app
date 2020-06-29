@@ -23,6 +23,7 @@ export class LoginPage implements OnInit {
 
   login(){
     // this.route.navigate(['dashboard']);
+    
     this.authService.login()
   }
 }

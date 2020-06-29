@@ -11,8 +11,8 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AuthGuard } from './services/auth-guard.service';
 import { AuthenticationService } from './services/authentication.service';
+import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule} from '@angular/common/http';
-// import { Storage } from '@ionic/storage';
 
 
 @NgModule({
@@ -22,6 +22,7 @@ import { HttpClientModule} from '@angular/common/http';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    IonicStorageModule.forRoot(),
     HttpClientModule
   ],
   providers: [
