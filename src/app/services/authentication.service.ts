@@ -4,7 +4,7 @@ import { Storage } from '@ionic/storage';
 import { ToastController, Platform } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 
-import { environment, SERVER_URL } from '../../environments/environment';
+import {  SERVER_URL } from '../../environments/environment';
 import { HttpClient,HttpHeaders} from '@angular/common/http';
 import { AlertController,LoadingController } from '@ionic/angular';
 
@@ -19,9 +19,14 @@ export class AuthenticationService {
 
 user ={
   username:'',
-  password: ''
+  password:''
 };
-private headers: HttpHeaders = new HttpHeaders({});
+
+// headers = {
+//   'Authorization' : 'Basic YWRtaW46MTIzNA==',
+//   'X-API-KEY':'CODEX@123'
+// };
+//private headers: HttpHeaders = new HttpHeaders({});
 
 
 
@@ -36,7 +41,8 @@ private headers: HttpHeaders = new HttpHeaders({});
 
 
 
-  ){ 
+  )
+  { 
     this.platform.ready().then(() => {
       this.ifLoggedIn();
     });
@@ -63,23 +69,23 @@ private headers: HttpHeaders = new HttpHeaders({});
   // }
 
 
-  // //  // Http Options
-  // //  httpOptions = {
-  // //   headers: new HttpHeaders({
-  // //     'Content-Type': 'application/json'
-  // //   })
-  // // }
+   // Http Options
+   httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  }
 
-  // logout() {
-  //   this.storage.remove('USER_INFO').then(() => {
-  //     this.router.navigate(['login']);
-  //     this.authState.next(false);
-  //   });
-  // }
+  logout() {
+    this.storage.remove('USER_INFO').then(() => {
+      this.router.navigate(['login']);
+      this.authState.next(false);
+    });
+  }
 
-  // isAuthenticated() {
-  //   return this.authState.value;
-  // }
+  isAuthenticated() {
+    return this.authState.value;
+  }
 
 
 
@@ -93,24 +99,22 @@ private headers: HttpHeaders = new HttpHeaders({});
       message: 'Please wait...',
       spinner:"circles"
     });
-    // (await loading).present();
-    console.log(SERVER_URL);
-    this.headers.append('Content-Type','application/x-www-form-urlencoded');
-    this.headers.append('Content-Type','application/json');
-    this.headers.append('Content-Type','Access-Control-Allow-Origin');
-
+    let headers = new HttpHeaders({
+      'Authorization': "Basic " + btoa("admin:1234"),
+      'X-API-KEY': 'CODEX@123'
+    });
    (await loading).present();
     console.log(SERVER_URL);
    // console.log(this.user);
   
-    this.http.post(SERVER_URL+'login',this.user).subscribe((data:any)=> {
+   this.http.post(SERVER_URL+'authentication/login',this.user,{headers: headers}).subscribe((data:any)=> {
   //  console.log(data.user);
     if(data.status=="success")
     {
        this.loadingController.dismiss();
        this.storage.set('user',data.user);
 
-       this.router.navigate(['dashboard'])
+       this.router.navigate(['dashboard'])   
     }
     else if(data.status=="failure")
     {
