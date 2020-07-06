@@ -1,9 +1,86 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>student</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <!-- <ion-title>Student</ion-title> -->
+    <ion-buttons slot="primary">
+      <ion-button size="small" fill="solid" class="button-purple">My Profile
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content >
+  <ion-row class="top-row">
+    <ion-col>
+      <h2>Students</h2>
+    </ion-col>
+  </ion-row>
+  <div class="curve-shape">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <div class="box">
+            <!-- <ion-icon src="" ></ion-icon> -->
+            <ion-icon src="../../src/assets/images/Today_session.svg" ></ion-icon>
+            <p class="box-title">Today Sessions</p>
+          </div>
+        </ion-col>
+        <ion-col size="6">
+          <div class="box">
+            <ion-icon name="pencil"></ion-icon>
+            <p class="box-title">My Assignment</p>
+          </div>
+        </ion-col>
+      </ion-row>
 
+      <ion-row>
+        <ion-col size="6">
+          <div class="box">
+            <!-- <ion-icon src="" ></ion-icon> -->
+            <ion-icon src="../../src/assets/images/Today_session.svg" ></ion-icon>
+            <p class="box-title">My Courses</p>
+          </div>
+        </ion-col>
+        <ion-col size="6">
+          <div class="box">
+            <ion-icon name="pencil"></ion-icon>
+            <p class="box-title">Contact Teacher</p>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="6">
+          <div class="box">
+            <!-- <ion-icon src="" ></ion-icon> -->
+            <ion-icon src="../../../../" ></ion-icon>
+            <p class="box-title">Calendar</p>
+          </div>
+        </ion-col>
+        <ion-col size="6">
+          <div class="box">
+            <ion-icon name="pencil"></ion-icon>
+            <p class="box-title">Time Table</p>
+          </div>  
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <div class="box">
+            <!-- <ion-icon src="" ></ion-icon> -->
+            <ion-icon src="../../src/assets/images/Today_session.svg" ></ion-icon>
+            <p class="box-title">Today Sessions</p>
+          </div>
+        </ion-col>
+        <ion-col size="6">
+          <div class="box">
+            <ion-icon name="pencil"></ion-icon>
+            <p class="box-title">My Assignment</p>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>
