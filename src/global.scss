@@ -43,7 +43,16 @@
 
 // header
 ion-header {
-    ion-title{
-        text-transform: capitalize;
+    ion-toolbar{
+        --background: #1a0067;
+        ion-title{
+            text-transform: capitalize;
+            color: #fff;
+        }
     }
+}
+
+// buttons
+.bg-theme-dark{
+    
 }

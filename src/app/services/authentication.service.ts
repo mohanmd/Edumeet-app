@@ -52,7 +52,7 @@ user ={
   ifLoggedIn() {
     this.storage.get('USER_INFO').then((response) => {
       if (response) {
-        this.authState.next(true);
+        this.authState.next(false);
       }
     });
   }
@@ -108,7 +108,8 @@ user ={
    // console.log(this.user);
   
    this.http.post(SERVER_URL+'authentication/login',this.user,{headers: headers}).subscribe((data:any)=> {
-  //  console.log(data.user);
+   console.log(data.user);
+   console.log(data.status);
     if(data.status=="success")
     {
        this.loadingController.dismiss();
@@ -121,11 +122,11 @@ user ={
       console.log(this.user);
 
        this.loadingController.dismiss();
-      //  this.failurealert();
+       this.failurealert();
     }
     else{
       this.loadingController.dismiss();
-      // this.incorrectalert();
+      this.incorrectalert();
     }
    },
    (err) => {
@@ -138,6 +139,25 @@ user ={
     {
       //alert("2");
     }
+    
   }
+  async failurealert() {
+    const alert = await this.alertController.create({
+      message: 'Incorret Username And Password',
+      buttons: ['OK']
+    });
+    alert.present();
+  
+  }
+  async incorrectalert() {
+    const alert = await this.alertController.create({
+      message: 'Username And Password Empty',
+      buttons: ['OK']
+    });
+    alert.present();
+  
+  }
+  
+
 
 }
